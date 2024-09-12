@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  django:
+    build: ./my_dashboard_api  # Path to the backend directory
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./my_dashboard_api:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+
+  nextjs:
+    build: ./my-dashboard-app  # Path to the frontend directory
+    ports:
+      - "3000:3000"
+    depends_on:
+      - django
+
